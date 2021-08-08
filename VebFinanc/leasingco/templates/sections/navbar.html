@@ -1,0 +1,81 @@
+<header class="container">
+    <nav class="navbar navbar-expand-lg flex-column align-items-start pr-0 navbar-light bg-light">
+        <div class="row w-100">
+            <div class="col">
+                <a href="{{ url_for('index') }}" class="navbar-brand">
+                    Лизинговая компания
+                </a>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTopContent"
+                    aria-controls="navbarTopContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTopContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown mr-4">
+                            <a href="#" class="nav-link dropdown-toggle text-dark" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Отчетности
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a href="{{ url_for('index') }}" class="dropdown-item">Задание</a>
+                                <a href="{{ url_for('reports.parent') }}" class="dropdown-item">Материнская компания</a>
+                                <a href="{{ url_for('reports.subsidiary') }}" class="dropdown-item">Дочерняя компания</a>
+                                <a href="{{ url_for('reports.consolidation') }}" class="dropdown-item">Предприятия группы компаний</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-4">
+                            <a href="#" class="nav-link dropdown-toggle text-dark" id="navbarDropdownLeas"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Лизинговый портфель
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownLeas">
+                                <a href="{{ url_for('leasing.viewdate') }}" class="dropdown-item">Лизинговый портфель на дату</a>
+                                <a href="{{ url_for('leasing.viewregions') }}" class="dropdown-item">Лизинговый портфель по контрагентам</a>
+                                <a href="{{ url_for('leasing.viewtransfer') }}" class="dropdown-item">Передача техники в лизинг</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-4">
+                            <a href="#" class="nav-link dropdown-toggle text-dark" id="navbarDropdownStorage"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Склад
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownStorage">
+                                <a href="{{ url_for('leasing.viewstorage') }}" class="dropdown-item">Складские остатки</a>
+                                <a href="{{ url_for('leasing.viewstorbycat') }}" class="dropdown-item">Группировка по категориям</a>
+                                <a href="{{ url_for('leasing.viewturnover') }}" class="dropdown-item">Оборачиваемость товаров</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-4">
+                            <a href="#" class="nav-link dropdown-toggle text-dark" id="navbarDropdownCovenants"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ковенанты
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCovenants">
+                                <a href="{{ url_for('covenants.subsidiary') }}" class="dropdown-item">Дочерняя компания</a>
+                                <a href="{{ url_for('covenants.parental') }}" class="dropdown-item">Материнская компания</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-4">
+                            <a href="#" class="nav-link dropdown-toggle text-dark" id="navbarDropdownEdit"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Редактировать данные
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownEdit">
+                                <a href="{{ url_for('edit.viewproduct') }}" class="dropdown-item">Редактировать технику</a>
+                                <a href="{{ url_for('edit.viewregion') }}" class="dropdown-item">Редактировать регион</a>
+                                <a href="{{ url_for('edit.viewincorp') }}" class="dropdown-item">Редактировать организационно-правовую форму</a>
+                                <a href="{{ url_for('edit.viewclient') }}" class="dropdown-item">Редактировать лизингополучателя</a>
+                                <a href="{{ url_for('edit.viewcontract') }}" class="dropdown-item">Редактировать договор</a>
+                                <a href="{{ url_for('edit.viewpays') }}" class="dropdown-item">Редактировать платежи</a>
+                                <a href="{{ url_for('edit.viewstorage') }}" class="dropdown-item">Редактировать склад</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

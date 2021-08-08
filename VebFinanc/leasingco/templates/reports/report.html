@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">{{ pre_title }}Бухгалтерский баланс {{ post_title }}</h1>
+<table class="table table-hover">
+    {% for row in balance %}
+        {% if loop.index == 1 %}
+        <thead class="table-success">
+            <th scope="col">Показатели</th>
+            <th scope="col" class="text-center">Код строки</th>
+            <th scope="col" class="text-center">2018</th>
+            <th scope="col" class="text-center">2019</th>
+            <th scope="col" class="text-center">2020</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Актив</td>
+                <td class="text-center">Код</td>
+                <td colspan="3"></td>
+            </tr>
+        {% endif %}
+            {% if row['code'] in delim or row['code'] == 1200 or row['code'] == 1500 %}
+                {% if row['code'] == 1600 or row['code'] == 1700 %}
+            <tr class="table-warning">
+                <td class="text-right font-weight-bold">{{ row['title'] }}</td>
+                {% else %}
+            <tr class="table-success">
+                <td class="text-right">{{ row['title'] }}</td>
+                {% endif %}
+            {% else %}
+            <tr>
+                <td>{{ row['title'] }}</td>
+                {% endif %}
+                {% if row['code'] < 1100 %}
+                <td></td>
+                {% else %}
+                <td class="font-weight-bold text-center">{{ row['code'] }}</td>
+                {% endif %}
+                <td class="text-nowrap text-right">{{ row['2018']|half|round|pdigit if row['2018'] else '' }}</td>
+                <td class="text-nowrap text-right">{{ row['2019']|half|round|pdigit if row['2019'] else '' }}</td>
+                <td class="text-nowrap text-right">{{ row['2020']|half|round|pdigit if row['2020'] else '' }}</td>
+            </tr>
+            {% if row['code'] in delim %}
+                <tr><td colspan="5"></td></tr>
+                {% if row['code'] == 1600 %}
+                <tr>
+                    <td>Пассив</td>
+                    <td class="text-center">Код</td>
+                    <td colspan="3"></td>
+                </tr>
+                {% endif %}
+            {% endif %}
+        {% if loop.last %}
+        </tbody>
+        {% endif %}
+    {% endfor %}
+</table>
+<button type="button" class="btn btn-success" id="btn-balance"><i class="fa fa-lg fa-file-excel" aria-hidden="true"></i>&nbsp; Скачать отчет баланса</button>
+<h1 class="text-center">Отчет о финансовых результатах {{ post_title }}</h1>
+<table class="table table-hover my-5">
+    {% for row in finance %}
+        {% if loop.index == 1 %}
+        <thead class="table-primary">
+            <th scope="col">Показатели</th>
+            <th scope="col" class="text-nowrap">Код строки</th>
+            <th scope="col" class="text-center">2018</th>
+            <th scope="col" class="text-center">2019</th>
+            <th scope="col" class="text-center">2020</th>
+        </thead>
+        <tbody>
+        {% endif %}
+            {% if row['code'] == 2400 %}
+            <tr class="table-warning">
+                <td class="text-right font-weight-bold">{{ row['title'] }}</td>
+                <td class="font-weight-bold text-center">{{ row['code'] }}</td>
+                {% if row['2018'] < 0 %}
+                <td class="font-weight-bold text-danger text-nowrap text-right">{{ row['2018']|half|round|pdigit }}</td>
+                {% else %}
+                <td class="font-weight-bold text-nowrap text-right">{{ row['2018']|half|round|pdigit if row['2018'] else '' }}</td>
+                {% endif %}
+                {% if row['2019'] < 0 %}
+                <td class="font-weight-bold text-danger text-nowrap text-right">{{ row['2019']|half|round|pdigit }}</td>
+                {% else %}
+                <td class="font-weight-bold text-nowrap text-right">{{ row['2019']|half|round|pdigit if row['2019'] else '' }}</td>
+                {% endif %}
+                {% if row['2020'] < 0 %}
+                <td class="font-weight-bold text-danger text-nowrap text-right">{{ row['2020']|half|round|pdigit }}</td>
+                {% else %}
+                <td class="font-weight-bold text-nowrap text-right">{{ row['2020']|half|round|pdigit if row['2020'] else '' }}</td>
+                {% endif %}
+            {% else %}
+            <tr>
+                <td>{{ row['title'] }}</td>
+                {% if row['code'] == 2421 %}
+                <td class="font-italic text-center">{{ row['code'] }}</td>
+                {% else %}
+                <td class="font-weight-bold text-center">{{ row['code'] }}</td>
+                {% endif %}
+                {% if row['2018'] < 0 %}
+                <td class="text-danger text-nowrap text-right">{{ row['2018']|half|round|pdigit }}</td>
+                {% else %}
+                <td class="text-nowrap text-right">{{ row['2018']|half|round|pdigit if row['2018'] else '' }}</td>
+                {% endif %}
+                {% if row['2019'] < 0 %}
+                <td class="text-danger text-nowrap text-right">{{ row['2019']|half|round|pdigit }}</td>
+                {% else %}
+                <td class="text-nowrap text-right">{{ row['2019']|half|round|pdigit if row['2019'] else '' }}</td>
+                {% endif %}
+                {% if row['2020'] < 0 %}
+                <td class="text-danger text-nowrap text-right">{{ row['2020']|half|round|pdigit }}</td>
+                {% else %}
+                <td class="text-nowrap text-right">{{ row['2020']|half|round|pdigit if row['2020'] else '' }}</td>
+                {% endif %}
+            {% endif %}
+            </tr>
+        {% if loop.last %}
+        <tr><td colspan="5"></td></tr>
+        </tbody>
+        {% endif %}
+    {% endfor %}
+</table>
+<button type="button" class="btn btn-success mb-4" id="btn-finance"><i class="fa fa-lg fa-file-excel" aria-hidden="true"></i>&nbsp; Скачать отчет финансовых результатов</button>
+{% endblock content %}
+
+{% block scripts %}
+
+
+<script src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+{{ super() }}
+<script src="{{ url_for('static', filename='all.min.js') }}"></script>
+<script type="text/javascript">
+    $('#btn-balance, #btn-finance').click(function () {
+        let elem = $(this).attr('id');
+        elem = elem.slice(elem.indexOf('-')+1);
+        let url = "{{'/get_excel/{}/'.format(filename)}}";
+        url = url + elem
+        $.ajax({
+            url: url,
+            dataType: 'binary',
+            xhrFields: {
+                'responseType': 'blob'
+            },
+            success: function(data, status, xhr) {
+                var link = document.createElement('a'),
+                    filename = "{{'{}_'.format(filename)}}";
+                filename = filename + elem + '.xlsx'
+                link.href = URL.createObjectURL(data);
+                link.download = filename;
+                link.click();
+            }
+        });
+    });
+</script>
+{% endblock scripts %}
