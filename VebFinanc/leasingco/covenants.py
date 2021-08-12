@@ -1,16 +1,16 @@
 from decimal import Decimal
-
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
-
 from leasingco.db import get_db
+from . import visit_to_log
 
 bp = Blueprint('covenants', __name__, url_prefix='/covenants')
 
 
 @bp.route('/subsidiary', methods=('GET', 'POST'))
 def subsidiary():
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()
@@ -134,6 +134,7 @@ extras_sub = {
 
 @bp.route('/parental', methods=('GET', 'POST'))
 def parental():
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()

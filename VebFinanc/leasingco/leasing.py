@@ -1,20 +1,20 @@
 import datetime, copy
-
 from dateutil.parser import parse
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
-
 from leasingco.db import get_db
 from leasingco.custom_forms import PortfolioDateForm, TransferForm
-
 from leasingco.payments import Payments
+from . import visit_to_log
+
 
 bp = Blueprint('leasing', __name__, url_prefix='/leasing')
 
 
 @bp.route('/viewdate', methods=('GET', 'POST'))
 def viewdate():
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()
@@ -80,6 +80,7 @@ def viewdate():
 
 @bp.route('/viewregions', methods=('GET', 'POST'))
 def viewregions(date=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()
@@ -156,6 +157,7 @@ def viewregions(date=None):
 
 @bp.route('/viewtransfer', methods=('GET', 'POST'))
 def viewtransfer(action=None, idx=None):
+    visit_to_log(request.url)
     MONTHS = [None, 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
     db = get_db()
     error = None
@@ -272,6 +274,7 @@ def viewtransfer(action=None, idx=None):
 
 @bp.route('/viewstorage', methods=('GET', 'POST'))
 def viewstorage(action=None, idx=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     storage = db.execute("SELECT Storage.*, "
@@ -298,6 +301,7 @@ def viewstorage(action=None, idx=None):
 
 @bp.route('/viewstorbycat', methods=('GET', 'POST'))
 def viewstorbycat(action=None, idx=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()
@@ -342,6 +346,7 @@ def viewstorbycat(action=None, idx=None):
 
 @bp.route('/viewturnover', methods=('GET', 'POST'))
 def viewturnover(action=None, idx=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()

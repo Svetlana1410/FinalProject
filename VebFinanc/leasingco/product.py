@@ -2,12 +2,13 @@ import datetime
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
-
 from leasingco.db import get_db
 from leasingco.models import Product, Region, Client, Incorporation, Contract, PayModel, Storage
 from leasingco.custom_forms import (ProductForm, RegionForm,
         IncorpForm, ClientForm, ContractForm, ChoiceContractForm, StorageForm)
 from leasingco.payments import Payments
+from . import visit_to_log
+
 
 bp = Blueprint('edit', __name__, url_prefix='/edit')
 
@@ -16,6 +17,7 @@ bp = Blueprint('edit', __name__, url_prefix='/edit')
 @bp.route('/viewproduct/<string:action>', methods=('GET', 'POST'))
 @bp.route('/viewproduct/<string:action>/<int:idx>', methods=('GET', 'POST'))
 def viewproduct(action=None, idx=None):
+    visit_to_log(request.url)
     print(request.url)
     db = get_db()
     error = None
@@ -57,6 +59,7 @@ def viewproduct(action=None, idx=None):
 @bp.route('/viewregion/<string:action>', methods=('GET', 'POST'))
 @bp.route('/viewregion/<string:action>/<int:idx>', methods=('GET', 'POST'))
 def viewregion(action=None, idx=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()
@@ -93,6 +96,7 @@ def viewregion(action=None, idx=None):
 @bp.route('/viewincorp/<string:action>', methods=('GET', 'POST'))
 @bp.route('/viewincorp/<string:action>/<int:idx>', methods=('GET', 'POST'))
 def viewincorp(action=None, idx=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()
@@ -128,6 +132,7 @@ def viewincorp(action=None, idx=None):
 @bp.route('/viewclient/<string:action>', methods=('GET', 'POST'))
 @bp.route('/viewclient/<string:action>/<int:idx>', methods=('GET', 'POST'))
 def viewclient(action=None, idx=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()
@@ -172,6 +177,7 @@ def viewclient(action=None, idx=None):
 @bp.route('/viewcontract/<string:action>', methods=('GET', 'POST'))
 @bp.route('/viewcontract/<string:action>/<int:idx>', methods=('GET', 'POST'))
 def viewcontract(action=None, idx=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()
@@ -221,6 +227,7 @@ def viewcontract(action=None, idx=None):
 @bp.route('/viewpays/<string:action>', methods=('GET', 'POST'))
 @bp.route('/viewpays/<string:action>/<int:idx>', methods=('GET', 'POST'))
 def viewpays(action=None, idx=None):
+    visit_to_log(request.url)
     MONTHS = [None, 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
     db = get_db()
     error = None
@@ -276,6 +283,7 @@ def viewpays(action=None, idx=None):
 @bp.route('/viewstorage/<string:action>', methods=('GET', 'POST'))
 @bp.route('/viewstorage/<string:action>/<int:idx>', methods=('GET', 'POST'))
 def viewstorage(action=None, idx=None):
+    visit_to_log(request.url)
     db = get_db()
     error = None
     cursor = db.cursor()

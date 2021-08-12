@@ -7,14 +7,17 @@ from flask.cli import with_appcontext
 
 def get_db():
     if 'db' not in g:
-        g.db = pyodbc.connect(
-            DRIVER = '{ODBC Driver 17 for SQL Server}',
-            SERVER = current_app.config['DBSERVER_NAME'],
-            DATABASE = current_app.config['DATABASE_NAME'],
-            Trusted_Connection = 'yes',
-            autocommit = True
-        )
-
+        try:
+            current_app.logger.debug('Подключение к базе данных')
+            g.db = pyodbc.connect(
+                DRIVER = '{ODBC Driver 17 for SQL Server}',
+                SERVER = current_app.config['DBSERVER_NAME'],
+                DATABASE = current_app.config['DATABASE_NAME'],
+                Trusted_Connection = 'yes',
+                autocommit = True
+            )
+        except:
+            current_app.logger.exception("Невозможно подключиться к базе данных!")
     return g.db
 
 

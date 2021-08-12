@@ -1,27 +1,31 @@
 import json
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for,
-    send_from_directory, current_app
+    Blueprint, current_app, flash, g, redirect, render_template, request, url_for,
+    send_from_directory,
 )
 from openpyxl import Workbook
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.styles import Font, Alignment, NamedStyle, PatternFill
 from openpyxl.styles.colors import Color
 from werkzeug.exceptions import abort
-
 from leasingco.db import get_db
+from . import visit_to_log
+
 
 bp = Blueprint('reports', __name__)
+
 
 # главная страница
 @bp.route('/')
 def index():
+    visit_to_log(request.url)
     g.user = True
     return render_template('index.html')
 
 # Отчетности материнской компании
 @bp.route('/parent')
 def parent():
+    visit_to_log(request.url)
     delim = {1100, 1300, 1400, 1600, 1700}
     db = get_db()
     cursor = db.cursor()
@@ -45,6 +49,7 @@ def parent():
 # Отчетности дочерней компании
 @bp.route('/subsidiary')
 def subsidiary():
+    visit_to_log(request.url)
     delim = {1100, 1300, 1400, 1600, 1700}
     db = get_db()
     cursor = db.cursor()
@@ -68,6 +73,7 @@ def subsidiary():
 # Консолидированные отчетности по обеим компаниям
 @bp.route('/consolidation')
 def consolidation():
+    visit_to_log(request.url)
     delim = {1100, 1300, 1400, 1600, 1700}
     db = get_db()
     cursor = db.cursor()
@@ -127,6 +133,7 @@ def consolidation():
 
 @bp.route('/get_excel/<string:prefix>/<string:report>')
 def get_excel(prefix=None, report=None):
+    visit_to_log(request.url)
     print(current_app.config['CLIENT_XLSX'])
     try:
         return send_from_directory(current_app.config['CLIENT_XLSX'], path=f'{prefix}_{report}.xlsx', as_attachment=True)
